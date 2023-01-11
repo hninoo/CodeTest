@@ -8,6 +8,7 @@ use DTApi\Models\Language;
 use DTApi\Models\UserMeta;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
+use DTApi\Mailers\AppMailer;
 
 class TeHelper
 {
@@ -61,6 +62,16 @@ class TeHelper
         return $time->format('Y-m-d H:i:s');
 
     }
+
+    public static function sendMail($email, $name, $subject,$send_data,$text=null)
+    {
+        $mailer = new AppMailer();
+        $syntax = $text ? $text : 'emails.session-ended' ;
+        $mailer->send($email, $name, $subject, $syntax , $send_data);
+        return true;
+    }
+
+    
 
 }
 
